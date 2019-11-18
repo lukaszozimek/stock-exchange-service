@@ -1,8 +1,7 @@
-package financial_instruments
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -29,7 +28,7 @@ func (exchangeRate *ExchangeRate) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(exchangeRate)
+	GetDB().Create(exchangeRate)
 
 	resp := u.Message(true, "success")
 	resp["exchangeRate"] = exchangeRate
@@ -39,7 +38,7 @@ func (exchangeRate *ExchangeRate) Create() map[string]interface{} {
 func GetExchangeRate(id uint) *ExchangeRate {
 
 	ExchangeRate := &ExchangeRate{}
-	err := model.GetDB().Table("exchange_rate").Where("id = ?", id).First(ExchangeRate).Error
+	err := GetDB().Table("exchange_rate").Where("id = ?", id).First(ExchangeRate).Error
 	if err != nil {
 		return nil
 	}

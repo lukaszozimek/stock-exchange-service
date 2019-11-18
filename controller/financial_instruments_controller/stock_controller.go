@@ -3,14 +3,14 @@ package financial_instruments_controller
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/lukaszozimek/stock-exchange-service/model/financial_instruments"
+	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 	"net/http"
 	"strconv"
 )
 
 var CreateStock = func(w http.ResponseWriter, r *http.Request) {
-	stock := &financial_instruments.Stock{}
+	stock := &model.Stock{}
 
 	err := json.NewDecoder(r.Body).Decode(stock)
 	if err != nil {
@@ -37,7 +37,7 @@ var FindOneStock = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := financial_instruments.GetStockIndex(uint(id))
+	data := model.GetStockIndex(uint(id))
 	resp := u.Message(true, "success")
 	resp["data"] = data
 	u.Respond(w, resp)

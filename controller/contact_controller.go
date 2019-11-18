@@ -3,7 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	user2 "github.com/lukaszozimek/stock-exchange-service/model/user"
+	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 	"net/http"
 	"strconv"
@@ -12,7 +12,7 @@ import (
 var CreateContact = func(w http.ResponseWriter, r *http.Request) {
 
 	user := r.Context().Value("user").(uint) //Grab the id of the user that send the request
-	contact := &user2.Contact{}
+	contact := &model.Contact{}
 
 	err := json.NewDecoder(r.Body).Decode(contact)
 	if err != nil {
@@ -35,7 +35,7 @@ var GetContactsFor = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := user2.GetContacts(uint(id))
+	data := model.GetContacts(uint(id))
 	resp := u.Message(true, "success")
 	resp["data"] = data
 	u.Respond(w, resp)

@@ -1,8 +1,7 @@
-package company
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -29,7 +28,7 @@ func (company *Company) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(company)
+	GetDB().Create(company)
 
 	resp := u.Message(true, "success")
 	resp["company"] = company
@@ -39,7 +38,7 @@ func (company *Company) Create() map[string]interface{} {
 func GetCompany(id uint) *Company {
 
 	company := &Company{}
-	err := model.GetDB().Table("company").Where("id = ?", id).First(company).Error
+	err := GetDB().Table("company").Where("id = ?", id).First(company).Error
 	if err != nil {
 		return nil
 	}

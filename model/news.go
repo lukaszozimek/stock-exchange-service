@@ -1,8 +1,7 @@
-package news
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -28,7 +27,7 @@ func (news *News) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(news)
+	GetDB().Create(news)
 
 	resp := u.Message(true, "success")
 	resp["news"] = news
@@ -38,7 +37,7 @@ func (news *News) Create() map[string]interface{} {
 func GetNews(id uint) *News {
 
 	stockExchange := &News{}
-	err := model.GetDB().Table("news").Where("id = ?", id).First(stockExchange).Error
+	err := GetDB().Table("news").Where("id = ?", id).First(stockExchange).Error
 	if err != nil {
 		return nil
 	}

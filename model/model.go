@@ -5,11 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-	"github.com/lukaszozimek/stock-exchange-service/model/company"
-	"github.com/lukaszozimek/stock-exchange-service/model/financial_instruments"
-	"github.com/lukaszozimek/stock-exchange-service/model/news"
-	"github.com/lukaszozimek/stock-exchange-service/model/stock_exchange"
-	"github.com/lukaszozimek/stock-exchange-service/model/user"
 	"os"
 )
 
@@ -37,17 +32,17 @@ func init() {
 
 	db = conn
 	db.Debug().AutoMigrate(
-		&user.Account{},
-		&user.Contact{},
-		&stock_exchange.StockExchange{},
-		&news.News{},
-		&news.Publisher{},
-		&company.Company{},
-		&financial_instruments.Bonds{},
-		&financial_instruments.ExchangeRate{},
-		&financial_instruments.Resource{},
-		&financial_instruments.Stock{},
-		&financial_instruments.StockIndex{}) //Database migration
+		&Account{},
+		&Contact{},
+		&StockExchange{},
+		&News{},
+		&Publisher{},
+		&Company{},
+		&Bonds{},
+		&ExchangeRate{},
+		&Resource{},
+		&Stock{},
+		&StockIndex{}) //Database migration
 }
 
 //returns a handle to the DB object

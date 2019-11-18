@@ -3,14 +3,14 @@ package financial_instruments_controller
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
-	"github.com/lukaszozimek/stock-exchange-service/model/financial_instruments"
+	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 	"net/http"
 	"strconv"
 )
 
 var CreateBonds = func(w http.ResponseWriter, r *http.Request) {
-	stockExchange := &financial_instruments.Bonds{}
+	stockExchange := &model.Bonds{}
 	err := json.NewDecoder(r.Body).Decode(stockExchange)
 	if err != nil {
 		u.Respond(w, u.Message(false, "Error while decoding request body"))
@@ -36,7 +36,7 @@ var FindOneBonds = func(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data := financial_instruments.GetBond(uint(id))
+	data := model.GetBond(uint(id))
 	resp := u.Message(true, "success")
 	resp["data"] = data
 	u.Respond(w, resp)

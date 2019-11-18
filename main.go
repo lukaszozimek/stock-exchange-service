@@ -20,11 +20,11 @@ func main() {
 	router.HandleFunc("/api/v1/user/{id}/contact", controller.CreateContact).Methods("POST")
 	router.HandleFunc("/api/v1/user/{id}/contact", controller.GetContactsFor).Methods("GET")
 
-	router.HandleFunc("/api/v1/stock", financial_instruments.FindAllStock).Methods("GET")
-	router.HandleFunc("/api/v1/stock/{id}", financial_instruments.FindOneStock).Methods("GET")
-	router.HandleFunc("/api/v1/stock", financial_instruments.CreateStock).Methods("POST")
-	router.HandleFunc("/api/v1/stock", financial_instruments.UpdateStock).Methods("PUT")
-	router.HandleFunc("/api/v1/stock/{id}", financial_instruments.DeleteStock).Methods("DELETE")
+	router.HandleFunc("/api/v1/stock", financial_instruments_controller.FindAllStock).Methods("GET")
+	router.HandleFunc("/api/v1/stock/{id}", financial_instruments_controller.FindOneStock).Methods("GET")
+	router.HandleFunc("/api/v1/stock", financial_instruments_controller.CreateStock).Methods("POST")
+	router.HandleFunc("/api/v1/stock", financial_instruments_controller.UpdateStock).Methods("PUT")
+	router.HandleFunc("/api/v1/stock/{id}", financial_instruments_controller.DeleteStock).Methods("DELETE")
 
 	port := os.Getenv("PORT") //Get port from .env file, we did not specify any port so this should return an empty string when tested locally
 	if port == "" {

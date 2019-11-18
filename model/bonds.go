@@ -1,8 +1,7 @@
-package financial_instruments
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -28,7 +27,7 @@ func (bonds *Bonds) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(bonds)
+	GetDB().Create(bonds)
 
 	resp := u.Message(true, "success")
 	resp["bonds"] = bonds
@@ -36,14 +35,14 @@ func (bonds *Bonds) Create() map[string]interface{} {
 }
 func DeleteBond(id uint) {
 	bonds := &Bonds{}
-	model.GetDB().Table("bonds").Delete(&bonds, model.GetDB().Where("id = ?", id))
+	GetDB().Table("bonds").Delete(&bonds, GetDB().Where("id = ?", id))
 
 }
 
 func GetBond(id uint) *Bonds {
 
 	bonds := &Bonds{}
-	err := model.GetDB().Table("bonds").Where("id = ?", id).First(bonds).Error
+	err := GetDB().Table("bonds").Where("id = ?", id).First(bonds).Error
 	if err != nil {
 		return nil
 	}

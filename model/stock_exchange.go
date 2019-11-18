@@ -1,8 +1,7 @@
-package stock_exchange
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -27,7 +26,7 @@ func (stockExchange *StockExchange) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(stockExchange)
+	GetDB().Create(stockExchange)
 
 	resp := u.Message(true, "success")
 	resp["stockExchange"] = stockExchange
@@ -37,7 +36,7 @@ func (stockExchange *StockExchange) Create() map[string]interface{} {
 func GetStockExchange(id uint) *StockExchange {
 
 	stockExchange := &StockExchange{}
-	err := model.GetDB().Table("stock_exchange").Where("id = ?", id).First(stockExchange).Error
+	err := GetDB().Table("stock_exchange").Where("id = ?", id).First(stockExchange).Error
 	if err != nil {
 		return nil
 	}

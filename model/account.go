@@ -1,9 +1,8 @@
-package user
+package model
 
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 	"golang.org/x/crypto/bcrypt"
 	"os"
@@ -41,7 +40,7 @@ func (account *Account) Validate() (map[string]interface{}, bool) {
 	temp := &Account{}
 
 	//check for errors and duplicate emails
-	err := model.GetDB().Table("accounts").Where("email = ?", account.Email).First(temp).Error
+	err := GetDB().Table("accounts").Where("email = ?", account.Email).First(temp).Error
 	if err != nil && err != gorm.ErrRecordNotFound {
 		return u.Message(false, "Connection error. Please retry"), false
 	}
@@ -61,7 +60,7 @@ func (account *Account) Create() map[string]interface{} {
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(account.Password), bcrypt.DefaultCost)
 	account.Password = string(hashedPassword)
 
-	model.GetDB().Create(account)
+	GetDB().Create(account)
 
 	if account.ID <= 0 {
 		return u.Message(false, "Failed to create account, connection error.")
@@ -83,7 +82,7 @@ func (account *Account) Create() map[string]interface{} {
 func Login(email, password string) map[string]interface{} {
 
 	account := &Account{}
-	err := model.GetDB().Table("accounts").Where("email = ?", email).First(account).Error
+	err := GetDB().Table("accounts").Where("email = ?", email).First(account).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
 			return u.Message(false, "Email address not found")
@@ -112,7 +111,7 @@ func Login(email, password string) map[string]interface{} {
 func GetUser(u uint) *Account {
 
 	acc := &Account{}
-	model.GetDB().Table("account").Where("id = ?", u).First(acc)
+	GetDB().Table("account").Where("id = ?", u).First(acc)
 	if acc.Email == "" { //User not found!
 		return nil
 	}

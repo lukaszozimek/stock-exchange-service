@@ -1,8 +1,7 @@
-package financial_instruments
+package model
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/lukaszozimek/stock-exchange-service/model"
 	u "github.com/lukaszozimek/stock-exchange-service/util"
 )
 
@@ -29,7 +28,7 @@ func (stockIndex *StockIndex) Create() map[string]interface{} {
 		return resp
 	}
 
-	model.GetDB().Create(stockIndex)
+	GetDB().Create(stockIndex)
 	resp := u.Message(true, "success")
 	resp["stockIndex"] = stockIndex
 	return resp
@@ -38,7 +37,7 @@ func (stockIndex *StockIndex) Create() map[string]interface{} {
 func GetStockIndex(id uint) *StockIndex {
 
 	stockIndex := &StockIndex{}
-	err := model.GetDB().Table("stock_index").Where("id = ?", id).First(stockIndex).Error
+	err := GetDB().Table("stock_index").Where("id = ?", id).First(stockIndex).Error
 	if err != nil {
 		return nil
 	}
